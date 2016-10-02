@@ -1,9 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 
-export default class Dashboard extends Component {
+
+import Groups from '../../components/Groups/Groups';
+
+class Dashboard extends Component {
   render() {
     return (
-      <div>Dashboard</div>
-    )
+      <div>
+        <Groups />
+      </div>
+    );
   }
 }
+
+export default Dashboard;

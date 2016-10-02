@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
-import './App.css';
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        {this.props.children}
-      </div>
+      <MuiThemeProvider>
+        <div>
+          <AppBar
+            title="Dashboard - Расписание МГТУГА"
+            showMenuIconButton={false}
+          />
+          {this.props.children}
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
