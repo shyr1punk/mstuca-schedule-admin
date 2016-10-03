@@ -16,3 +16,18 @@ export const fetchGroups = dispatch =>
         data: response
       });
     });
+
+/**
+ * Обновление группы
+ *
+ *
+ *
+ * @returns {Object} state
+ */
+export const updateGroup = (groupId) =>
+  fetch(`/admin/groups/${groupId}/update`)
+    .then(response => response.json())
+    .then(
+      response => response.result,
+      err => err
+    );

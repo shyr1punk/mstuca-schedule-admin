@@ -4,18 +4,29 @@ import { connect } from 'react-redux';
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import CircularProgress from 'material-ui/CircularProgress';
+import RaisedButton from 'material-ui/RaisedButton';
+import ActionUpdate from 'material-ui/svg-icons/action/update';
 
-import { fetchGroups } from '../../actions/groupActions';
+import { fetchGroups, updateGroup } from '../../actions/groupActions';
 
 class Groups extends Component {
 
   constructor(props) {
     super(props);
     this.renderTable = this.renderTable.bind(this);
+    this.handleUpdateGroupClick = this.handleUpdateGroupClick.bind(this);
   }
 
   componentWillMount() {
     fetchGroups(this.props.dispatch);
+  }
+
+  handleUpdateGroupClick(groupId) {
+    updateGroup(groupId).then(result => {
+      if (result === 'OK') {
+        fetchGroups(this.props.dispatch);
+      }
+    });
   }
 
   renderTable() {
@@ -24,15 +35,22 @@ class Groups extends Component {
         <TableHeader>
           <TableRow>
             <TableHeaderColumn>Группа</TableHeaderColumn>
+            <TableHeaderColumn>Количество записей</TableHeaderColumn>
             <TableHeaderColumn>Обновить</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody>
           {this.props.groups.map(group => {
             return (
-              <TableRow>
+              <TableRow key={group._id}>
                 <TableRowColumn>{group.short}</TableRowColumn>
-                <TableRowColumn>Button</TableRowColumn>
+                <TableRowColumn>{group.lessonsCount || 0}</TableRowColumn>
+                <TableRowColumn>
+                  <RaisedButton
+                    icon={<ActionUpdate />}
+                    onClick={this.handleUpdateGroupClick.bind(this, group._id)}
+                  />
+                </TableRowColumn>
               </TableRow>
             );
           })}
@@ -57,5 +75,6 @@ export default connect(state => ({
 }))(Groups);
 
 Groups.propTypes = {
-  short: PropTypes.array
+  short: PropTypes.array,
+  lessonsCount: PropTypes.number
 };
