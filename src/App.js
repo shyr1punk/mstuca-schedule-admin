@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 
+require('bootstrap-grid');
+
 class App extends Component {
   render() {
     return (
