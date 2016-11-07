@@ -7,12 +7,20 @@ import CircularProgress from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
 import ActionUpdate from 'material-ui/svg-icons/action/update';
 
-import { fetchSpecialities } from '../../actions/specialityActions';
+import { fetchSpecialities, insertGroups } from '../../actions/specialityActions';
 
 class Specialities extends Component {
 
   componentWillMount() {
     this.props.dispatch(fetchSpecialities());
+  }
+
+  handleInsertGroupsClick(specialityId) {
+    insertGroups(specialityId).then(result => {
+      if (result === 'OK') {
+        this.props.dispatch(fetchSpecialities());
+      }
+    });
   }
 
   renderTable() {
@@ -22,7 +30,7 @@ class Specialities extends Component {
           <TableRow>
             <TableHeaderColumn>Специальность</TableHeaderColumn>
             <TableHeaderColumn>Количество групп</TableHeaderColumn>
-            <TableHeaderColumn>Обновить список групп</TableHeaderColumn>
+            <TableHeaderColumn>Вставить группы специальности</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -34,6 +42,7 @@ class Specialities extends Component {
                 <TableRowColumn>
                   <RaisedButton
                     icon={<ActionUpdate />}
+                    onClick={this.handleInsertGroupsClick.bind(this, speciality._id)}
                   />
                 </TableRowColumn>
               </TableRow>

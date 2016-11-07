@@ -11,3 +11,18 @@ export const fetchSpecialities = () => dispatch =>
         data: response
       });
     });
+
+/**
+ * Вставить группы специальности в коллекцию groups
+ *
+ * @param {String} specialityId
+ *
+ * @returns {Object} state
+ */
+export const insertGroups = specialityId =>
+  fetch(`/admin/specialities/${specialityId}/insert`)
+    .then(response => response.json())
+    .then(
+      response => response.result,
+      err => err
+    );
